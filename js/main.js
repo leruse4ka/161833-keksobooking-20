@@ -17,7 +17,7 @@ var getRandomLocationY = function (min, max) {
 };
 
 var renderAdverts = function () {
-  var adverts = [];
+  var advertsAll = [];
   for (var i = 0; i < 8; i++) {
     var indexImg = i + 1;
     var advert = {
@@ -25,7 +25,7 @@ var renderAdverts = function () {
         avatar: 'img/avatars/user0' + indexImg + '.png'
       },
       offer: {
-        title: '',
+        title: 'заголовок предложения',
         address: '600, 350',
         price: 0,
         type: ADVERTS_TYPES[0],
@@ -35,40 +35,48 @@ var renderAdverts = function () {
         checkout: ADVERTS_TIMES[0],
         features: ADVERTS_FEATURES[0],
         description: '',
-        photos: ADVERTS_PHOTOS[0]
+        photos: ADVERTS_PHOTOS
       },
       location: {
         x: getRandomLocationX(mapPins.offsetWidth),
         y: getRandomLocationY(130, 630)
       }
     };
-    adverts[i] = advert;
+    advertsAll[i] = advert;
   }
-  return adverts;
+  return advertsAll;
 };
 
+var adverts = renderAdverts();
 var map = document.querySelector('.map');
 map.classList.remove('map--faded');
 
-var createPins = function (advertsFunct) {
-  var fragment = document.createDocumentFragment();
+var createPin = function () {
+  var pinFragment = document.createDocumentFragment();
   var pin = document.querySelector('#pin').content;
+  var newPin = pin.cloneNode(true);
+  pinFragment.appendChild(newPin);
+  return pinFragment;
+};
+
+var createPins = function (advert) {
+  var fragment = document.createDocumentFragment();
   var mapPin = document.querySelector('.map__pin');
-  for (var j = 0; j < advertsFunct.length; j++) {
-    var newPin = pin.cloneNode(true);
-    newPin.querySelector('.map__pin').style.left = advertsFunct[j].location.x + (mapPin.offsetWidth / 2) + 'px';
-    newPin.querySelector('.map__pin').style.top = advertsFunct[j].location.y - mapPin.offsetHeight + 'px';
-    newPin.querySelector('img').src = advertsFunct[j].author.avatar;
-    newPin.querySelector('img').alt = advertsFunct[j].offer.title;
-    fragment.appendChild(newPin);
+  for (var j = 0; j < advert.length; j++) {
+    var pin = createPin();
+    pin.querySelector('.map__pin').style.left = advert[j].location.x + (mapPin.offsetWidth / 2) + 'px';
+    pin.querySelector('.map__pin').style.top = advert[j].location.y - mapPin.offsetHeight + 'px';
+    pin.querySelector('img').src = advert[j].author.avatar;
+    pin.querySelector('img').alt = advert[j].offer.title;
+    fragment.appendChild(pin);
   }
   return fragment;
 };
 
-var renderPins = function () {
-  var advertsFunct = renderAdverts();
-  var newMapPins = createPins(advertsFunct);
+
+var renderPins = function (advert) {
+  var newMapPins = createPins(advert);
   mapPins.appendChild(newMapPins);
 };
 
-renderPins();
+renderPins(adverts);
