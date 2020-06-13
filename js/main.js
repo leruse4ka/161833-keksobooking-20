@@ -175,14 +175,14 @@ var setCreateFeatures = function (container, offers) {
 
 var setCreateDescCard = function (advert) {
   var newCard = document.querySelector('.map__card');
-  setCreateContent(newCard.querySelector('.popup__title'), advert[0].offer.title, true);
-  setCreateContent(newCard.querySelector('.popup__text--address'), advert[0].offer.address, true);
-  setCreateContent(newCard.querySelector('.popup__text--price'), advert[0].offer.price, false, '&#8381;<span>/ночь</span>');
-  setCreateType(newCard.querySelector('.popup__type'), advert[0].offer.type);
-  setCreateCapacity(newCard.querySelector('.popup__text--capacity'), advert[0]);
-  setCreateTextTime(newCard.querySelector('.popup__text--time'), advert[0]);
-  setCreateFeatures(newCard.querySelector('.popup__features'), advert[0].offer.features);
-  setCreateContent(newCard.querySelector('.popup__description'), advert[0].offer.description, true);
+  setCreateContent(newCard.querySelector('.popup__title'), advert.offer.title, true);
+  setCreateContent(newCard.querySelector('.popup__text--address'), advert.offer.address, true);
+  setCreateContent(newCard.querySelector('.popup__text--price'), advert.offer.price, false, '&#8381;<span>/ночь</span>');
+  setCreateType(newCard.querySelector('.popup__type'), advert.offer.type);
+  setCreateCapacity(newCard.querySelector('.popup__text--capacity'), advert);
+  setCreateTextTime(newCard.querySelector('.popup__text--time'), advert);
+  setCreateFeatures(newCard.querySelector('.popup__features'), advert.offer.features);
+  setCreateContent(newCard.querySelector('.popup__description'), advert.offer.description, true);
   getCreatePhotos(newCard);
 };
 
@@ -190,7 +190,7 @@ var renderCard = function (advert) {
   var newCard = document.querySelector('#card').content.cloneNode(true);
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   map.insertBefore(newCard, mapFiltersContainer);
-  setCreateDescCard(advert);
+  setCreateDescCard(advert[0]);
 };
 
 renderCard(adverts);
