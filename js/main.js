@@ -174,7 +174,8 @@ var setCreateFeatures = function (container, offers) {
 };
 
 var setCreateDescCard = function (advert) {
-  var newCard = document.querySelector('.map__card');
+  var card = document.querySelector('#card').content.cloneNode(true);
+  var newCard = card.querySelector('.map__card');
   setCreateContent(newCard.querySelector('.popup__title'), advert.offer.title, true);
   setCreateContent(newCard.querySelector('.popup__text--address'), advert.offer.address, true);
   setCreateContent(newCard.querySelector('.popup__text--price'), advert.offer.price, false, '&#8381;<span>/ночь</span>');
@@ -184,13 +185,13 @@ var setCreateDescCard = function (advert) {
   setCreateFeatures(newCard.querySelector('.popup__features'), advert.offer.features);
   setCreateContent(newCard.querySelector('.popup__description'), advert.offer.description, true);
   getCreatePhotos(newCard);
+  return card;
 };
+
+var mapFiltersContainer = document.querySelector('.map__filters-container');
 
 var renderCard = function (advert) {
-  var newCard = document.querySelector('#card').content.cloneNode(true);
-  var mapFiltersContainer = document.querySelector('.map__filters-container');
-  map.insertBefore(newCard, mapFiltersContainer);
-  setCreateDescCard(advert[0]);
+  map.insertBefore(setCreateDescCard(advert), mapFiltersContainer);
 };
 
-renderCard(adverts);
+renderCard(adverts[0]);
