@@ -98,7 +98,9 @@
   var mapFiltersContainer = document.querySelector('.map__filters-container');
   var map = document.querySelector('.map');
 
-  window.renderCard = function (advert) {
+  var renderCard = function (advert) {
     map.insertBefore(setCreateDescCard(advert), mapFiltersContainer);
   };
+
+  window.renderCard = renderCard;
 })();

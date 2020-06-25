@@ -26,9 +26,11 @@
   };
 
 
-  window.renderPins = function (advert) {
+  var renderPins = function (advert) {
     var newMapPins = createPins(advert);
     mapPins.appendChild(newMapPins);
   };
+
+  window.renderPins = renderPins;
 
 })();

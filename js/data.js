@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.renderAdverts = function () {
+  var renderAdverts = function () {
     var mapPins = document.querySelector('.map__pins');
     var advertsAll = [];
     for (var i = 0; i < 8; i++) {
@@ -32,4 +32,6 @@
     }
     return advertsAll;
   };
+
+  window.renderAdverts = renderAdverts;
 })();
