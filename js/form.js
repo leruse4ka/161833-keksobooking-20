@@ -34,8 +34,8 @@
     } else {
       top = mapPinMain.offsetTop + (window.util.MAP_PIN_MAIN_HEIGHT / 2);
     }
-    var left = mapPinMain.offsetLeft + (window.util.MAP_PIN_MAIN_WIDTH / 2);
-    notice.querySelector('#address').value = top + ', ' + left;
+    var left = mapPinMain.offsetLeft + Math.floor(window.util.MAP_PIN_MAIN_WIDTH / 2);
+    notice.querySelector('#address').value = left + ', ' + top;
   };
 
   var checkRooms = function (rooms) {
@@ -60,10 +60,42 @@
     checkRooms(target.value);
   });
 
+  var formTypes = notice.querySelector('#type');
+  var formPrice = notice.querySelector('#price');
+
+  var checkType = function () {
+    formPrice.setAttribute('min', window.util.minPrice[formTypes.value]);
+    formPrice.placeholder = window.util.minPrice[formTypes.value];
+  };
+
+  formTypes.addEventListener('change', checkType);
+
+  var timeIn = notice.querySelector('#timein');
+  var timeOut = notice.querySelector('#timeout');
+
+  var checkTimes = function (time) {
+    var timeOutOption = timeOut.querySelectorAll('option');
+
+    timeOutOption.forEach(function (option) {
+      if (Number(option.value === time)) {
+        option.disabled = false;
+        option.selected = true;
+      }
+      option.disabled = true;
+    });
+  };
+
+  timeIn.addEventListener('change', function (evt) {
+    var target = evt.target;
+    checkTimes(target.value);
+  });
+
   window.formValidation = {
     setStatus: setStatus,
     setAddress: setAddress,
-    checkRooms: checkRooms
+    checkRooms: checkRooms,
+    checkType: checkType,
+    checkTimes: checkTimes
   };
 
 })();
