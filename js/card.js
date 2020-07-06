@@ -80,9 +80,23 @@
     }
   };
 
+  var closeCard = function () {
+    var card = document.querySelector('.map__card');
+    card.remove();
+    document.removeEventListener('keydown', onCardEscPress);
+  };
+
+  var onCardEscPress = function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      closeCard();
+    }
+  };
+
   var setCreateDescCard = function (advert) {
     var card = document.querySelector('#card').content.cloneNode(true);
     var newCard = card.querySelector('.map__card');
+    newCard.querySelector('.popup__avatar').src = advert.author.avatar;
     cardContent.setCreateContent(newCard.querySelector('.popup__title'), advert.offer.title, true);
     cardContent.setCreateContent(newCard.querySelector('.popup__text--address'), advert.offer.address, true);
     cardContent.setCreateContent(newCard.querySelector('.popup__text--price'), advert.offer.price, false, '&#8381;<span>/ночь</span>');
@@ -92,6 +106,13 @@
     cardContent.setCreateFeatures(newCard.querySelector('.popup__features'), advert.offer.features);
     cardContent.setCreateContent(newCard.querySelector('.popup__description'), advert.offer.description, true);
     cardContent.getCreatePhotos(newCard);
+
+    newCard.querySelector('.popup__close').addEventListener('click', function () {
+      closeCard();
+    });
+
+    document.addEventListener('keydown', onCardEscPress);
+
     return card;
   };
 
