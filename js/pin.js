@@ -34,11 +34,20 @@
 
 
   var renderPins = function (advert) {
-    advert.forEach(function (pin) {
-      mapPins.appendChild(createPin(pin));
+    var mapPinsNotMain = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    mapPinsNotMain.forEach(function (pin) {
+      pin.remove();
     });
+    var card = document.querySelector('.map__card');
+    if (card) {
+      card.remove();
+    }
+    for (var i = 0; i < window.util.MAX_PINS; i++) {
+      mapPins.appendChild(createPin(advert[i]));
+    }
   };
 
   window.renderPins = renderPins;
 
 })();
+
