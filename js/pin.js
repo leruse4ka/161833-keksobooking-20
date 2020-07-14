@@ -34,6 +34,14 @@
 
 
   var renderPins = function (advert) {
+    var mapPinsNotMain = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    mapPinsNotMain.forEach(function (pin) {
+      pin.remove();
+    });
+    var card = document.querySelector('.map__card');
+    if (card) {
+      card.remove();
+    }
     advert.forEach(function (pin) {
       mapPins.appendChild(createPin(pin));
     });
@@ -42,3 +50,4 @@
   window.renderPins = renderPins;
 
 })();
+
