@@ -63,9 +63,11 @@
     }).slice(0, 5);
   };
 
-  var onMapFiltersChange = function () {
-    window.debounce(window.renderPins(window.filter.updatePins(window.pins)));
+  var filterChange = function () {
+    window.renderPins(window.filter.updatePins(window.pins));
   };
+
+  var onMapFiltersChange = window.debounce(filterChange);
 
   window.filter = {
     updatePins: updatePins,
@@ -74,8 +76,3 @@
 
 })();
 
-
-// window.wizard.onEyesChange = window.debounce(function (color) {
-//   colorEyes = color;
-//   window.updateWizards();
-// });
