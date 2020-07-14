@@ -42,9 +42,9 @@
     if (card) {
       card.remove();
     }
-    for (var i = 0; i < window.util.MAX_PINS; i++) {
-      mapPins.appendChild(createPin(advert[i]));
-    }
+    advert.forEach(function (pin) {
+      mapPins.appendChild(createPin(pin));
+    });
   };
 
   window.renderPins = renderPins;

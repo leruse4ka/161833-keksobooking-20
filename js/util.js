@@ -16,7 +16,7 @@
     MIN_LEFT_COORDS: 0,
     MIN_TOP_COORDS: 130,
     MAX_TOP_COORDS: 630,
-    MAX_PINS: 5,
+    MAX_PINS_COUNT: 5,
     typesName: {
       palace: 'Дворец',
       flat: 'Квартира',

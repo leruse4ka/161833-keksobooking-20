@@ -119,6 +119,15 @@
     }
   };
 
+  var successHandler = function () {
+    messageHandler('#success');
+    window.deactivatePage();
+    form.reset();
+
+    document.addEventListener('click', successClickHandler);
+    document.addEventListener('keydown', successClickHandler);
+  };
+
   var errorHandler = function () {
     messageHandler('#error');
     document.addEventListener('click', errorClickHandler);
@@ -129,14 +138,7 @@
 
     notice.querySelector('#address').removeAttribute('disabled', 'disabled');
 
-    window.upload(new FormData(form), function () {
-      messageHandler('#success');
-      window.noActivePage();
-      form.reset();
-
-      document.addEventListener('click', successClickHandler);
-      document.addEventListener('keydown', successClickHandler);
-    }, errorHandler);
+    window.upload(new FormData(form), successHandler, errorHandler);
     evt.preventDefault();
   });
 

@@ -8,19 +8,19 @@
 
   var mapPinMain = document.querySelector('.map__pin--main');
 
-  var noActiveForm = function () {
+  var deactivateForm = function () {
     window.formValidation.setAddress(false);
     window.formValidation.setStatus(notice.querySelectorAll('fieldset'), false);
     window.formValidation.setStatus(map.querySelectorAll('select'), false);
     map.querySelector('.map__filters').classList.add('map__filters--disabled');
   };
 
-  noActiveForm();
+  deactivateForm();
 
-  var noActivePage = function () {
+  var deactivatePage = function () {
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
-    noActiveForm();
+    deactivateForm();
     map.classList.add('map--faded');
     notice.querySelector('.ad-form').classList.add('ad-form--disabled');
 
@@ -42,38 +42,14 @@
 
   var formResetClickHandler = function (evt) {
     evt.preventDefault();
-    noActivePage();
+    deactivatePage();
 
     formResetButton.removeEventListener('click', formResetClickHandler);
   };
 
-  var pins = [];
-  var housingType = 'any';
-  var mapForm = document.querySelector('.map__filters');
-  var housingTypeInput = mapForm.querySelector('#housing-type');
-
-  var updatePins = function () {
-    var sameTypesPins = pins.filter(function (it) {
-      if (housingType === 'any') {
-        return it;
-      } else {
-        return it.offer.type === housingType;
-      }
-    });
-
-    window.renderPins(sameTypesPins);
-  };
-
-  housingTypeInput.addEventListener('change', function (evt) {
-    var target = evt.target;
-    housingType = target.value;
-
-    updatePins();
-  });
-
   var successHandler = function (data) {
-    pins = data;
-    updatePins();
+    window.pins = data;
+    window.renderPins(window.filter.updatePins(data));
   };
 
   var errorHandler = function (errorMessage) {
@@ -86,6 +62,8 @@
     node.textContent = errorMessage;
     document.body.insertAdjacentElement('afterbegin', node);
   };
+
+  var mapFilters = document.querySelector('.map__filters');
 
   var mainPinClichHandler = function (evt) {
     if (evt.button === 0 || evt.key === 'Enter') {
@@ -105,6 +83,7 @@
       mapPinMain.removeEventListener('keydown', mainPinClichHandler);
 
       formResetButton.addEventListener('click', formResetClickHandler);
+      mapFilters.addEventListener('change', window.filter.onMapFiltersChange);
     }
   };
 
@@ -112,6 +91,6 @@
 
   mapPinMain.addEventListener('keydown', mainPinClichHandler);
 
-  window.noActivePage = noActivePage;
+  window.deactivatePage = deactivatePage;
 
 })();
