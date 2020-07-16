@@ -67,11 +67,11 @@
     window.renderPins(window.filter.updatePins(window.pins));
   };
 
-  var onMapFiltersChange = window.debounce(filterChange);
+  var mapFiltersHandler = window.debounce(filterChange);
 
   window.filter = {
     updatePins: updatePins,
-    onMapFiltersChange: onMapFiltersChange
+    mapFiltersHandler: mapFiltersHandler
   };
 
 })();

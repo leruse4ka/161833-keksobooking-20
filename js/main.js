@@ -83,7 +83,7 @@
       mapPinMain.removeEventListener('keydown', mainPinClichHandler);
 
       formResetButton.addEventListener('click', formResetClickHandler);
-      mapFilters.addEventListener('change', window.filter.onMapFiltersChange);
+      mapFilters.addEventListener('change', window.filter.mapFiltersHandler);
     }
   };
 
