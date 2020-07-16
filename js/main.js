@@ -19,10 +19,14 @@
 
   var deactivatePage = function () {
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    var avatarPhoto = document.querySelector('.ad-form-header__preview img');
+    var advertPhoto = document.querySelector('.ad-form__photo');
 
     deactivateForm();
     map.classList.add('map--faded');
     notice.querySelector('.ad-form').classList.add('ad-form--disabled');
+    avatarPhoto.src = 'img/muffin-grey.svg';
+    advertPhoto.innerHTML = '';
 
     mapPins.forEach(function (pin) {
       pin.remove();
