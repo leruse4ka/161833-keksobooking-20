@@ -3,9 +3,7 @@
 (function () {
 
   var map = document.querySelector('.map');
-
   var notice = document.querySelector('.notice');
-
   var mapPinMain = document.querySelector('.map__pin--main');
 
   var deactivateForm = function () {
