@@ -2,22 +2,26 @@
 
 (function () {
   var cardContent = {
-    setSrcPhotos: function (newCard) {
+    setSrcPhotos: function (newCard, advert) {
       var photoCard = newCard.querySelectorAll('.popup__photo');
-      for (var k = 0; k < window.util.ADVERTS_PHOTOS.length; k++) {
-        photoCard[k].src = window.util.ADVERTS_PHOTOS[k];
+      for (var k = 0; k < advert.length; k++) {
+        photoCard[k].src = advert[k];
       }
     },
 
-    getCreatePhotos: function (newCard) {
+    getCreatePhotos: function (newCard, advert) {
       var photoCard = newCard.querySelector('.popup__photo');
       var newPhoto = document.createDocumentFragment();
-      for (var k = 0; k < window.util.ADVERTS_PHOTOS.length - 1; k++) {
-        var photo = photoCard.cloneNode(true);
-        newPhoto.appendChild(photo);
+      if (advert.length) {
+        for (var k = 0; k < advert.length - 1; k++) {
+          var photo = photoCard.cloneNode(true);
+          newPhoto.appendChild(photo);
+        }
+        var photos = newCard.querySelector('.popup__photos').appendChild(newPhoto);
+      } else {
+        newCard.querySelector('.popup__photos').style.display = 'none';
       }
-      var photos = newCard.querySelector('.popup__photos').appendChild(newPhoto);
-      cardContent.setSrcPhotos(newCard);
+      cardContent.setSrcPhotos(newCard, advert);
       return photos;
     },
 
@@ -105,7 +109,7 @@
     cardContent.setCreateTextTime(newCard.querySelector('.popup__text--time'), advert);
     cardContent.setCreateFeatures(newCard.querySelector('.popup__features'), advert.offer.features);
     cardContent.setCreateContent(newCard.querySelector('.popup__description'), advert.offer.description, true);
-    cardContent.getCreatePhotos(newCard);
+    cardContent.getCreatePhotos(newCard, advert.offer.photos);
 
     newCard.querySelector('.popup__close').addEventListener('click', function () {
       closeCard();
