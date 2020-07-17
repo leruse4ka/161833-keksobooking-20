@@ -13,6 +13,7 @@
     window.formValidation.setStatus(notice.querySelectorAll('fieldset'), false);
     window.formValidation.setStatus(map.querySelectorAll('select'), false);
     map.querySelector('.map__filters').classList.add('map__filters--disabled');
+    map.querySelector('.map__filters').reset();
   };
 
   deactivateForm();
@@ -21,12 +22,16 @@
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     var avatarPhoto = document.querySelector('.ad-form-header__preview img');
     var advertPhoto = document.querySelector('.ad-form__photo');
+    var featuresInput = notice.querySelectorAll('.feature__checkbox');
 
     deactivateForm();
     map.classList.add('map--faded');
-    notice.querySelector('.ad-form').classList.add('ad-form--disabled');
     avatarPhoto.src = 'img/muffin-grey.svg';
     advertPhoto.innerHTML = '';
+    featuresInput.forEach(function (feature) {
+      feature.checked = false;
+    });
+    notice.querySelector('.ad-form').classList.add('ad-form--disabled');
 
     mapPins.forEach(function (pin) {
       pin.remove();
@@ -45,8 +50,10 @@
   var formResetButton = document.querySelector('.ad-form__reset');
 
   var formResetClickHandler = function (evt) {
+    var form = notice.querySelector('.ad-form');
     evt.preventDefault();
     deactivatePage();
+    form.reset();
 
     formResetButton.removeEventListener('click', formResetClickHandler);
   };
