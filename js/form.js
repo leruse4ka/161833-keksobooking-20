@@ -2,6 +2,14 @@
 
 (function () {
   var mapPinMain = document.querySelector('.map__pin--main');
+  var notice = document.querySelector('.notice');
+  var selectRoom = notice.querySelector('#room_number');
+  var selectCapacity = notice.querySelector('#capacity');
+  var form = notice.querySelector('.ad-form');
+  var timeIn = notice.querySelector('#timein');
+  var timeOut = notice.querySelector('#timeout');
+  var formTypes = notice.querySelector('#type');
+  var formPrice = notice.querySelector('#price');
 
   var roomValues = {
     1: [1],
@@ -9,12 +17,6 @@
     3: [1, 2, 3],
     100: [0]
   };
-
-  var notice = document.querySelector('.notice');
-  var selectRoom = notice.querySelector('#room_number');
-  var selectCapacity = notice.querySelector('#capacity');
-  var form = notice.querySelector('.ad-form');
-
 
   var setStatus = function (status, active) {
     if (active) {
@@ -56,24 +58,11 @@
     });
   };
 
-  selectRoom.addEventListener('change', function (evt) {
-    var target = evt.target;
-    checkRooms(target.value);
-  });
-
-  var formTypes = notice.querySelector('#type');
-  var formPrice = notice.querySelector('#price');
 
   var checkType = function () {
     formPrice.setAttribute('min', window.util.minPrice[formTypes.value]);
     formPrice.placeholder = window.util.minPrice[formTypes.value];
   };
-
-  formTypes.addEventListener('change', checkType);
-
-  var timeIn = notice.querySelector('#timein');
-  var timeOut = notice.querySelector('#timeout');
-
 
   var checkTimes = function (time) {
     var timeOutOption = timeOut.querySelectorAll('option');
@@ -87,11 +76,6 @@
       }
     });
   };
-
-  timeIn.addEventListener('change', function (evt) {
-    var target = evt.target;
-    checkTimes(target.value);
-  });
 
   var messageHandler = function (id) {
     var template = document.querySelector(id).content;
@@ -121,7 +105,7 @@
 
   var successHandler = function () {
     messageHandler('#success');
-    window.deactivatePage();
+    window.main.deactivatePage();
     form.reset();
 
     document.addEventListener('click', successClickHandler);
@@ -134,11 +118,21 @@
     document.addEventListener('keydown', errorClickHandler);
   };
 
+  selectRoom.addEventListener('change', function (evt) {
+    var target = evt.target;
+    checkRooms(target.value);
+  });
+
+  formTypes.addEventListener('change', checkType);
+
+  timeIn.addEventListener('change', function (evt) {
+    var target = evt.target;
+    checkTimes(target.value);
+  });
+
   form.addEventListener('submit', function (evt) {
-
     notice.querySelector('#address').removeAttribute('disabled', 'disabled');
-
-    window.upload(new FormData(form), successHandler, errorHandler);
+    window.backend.upload(new FormData(form), successHandler, errorHandler);
     evt.preventDefault();
   });
 

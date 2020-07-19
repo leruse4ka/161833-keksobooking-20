@@ -5,6 +5,10 @@
   var map = document.querySelector('.map');
   var notice = document.querySelector('.notice');
   var mapPinMain = document.querySelector('.map__pin--main');
+  var selectRoom = notice.querySelector('#room_number');
+  var timeIn = notice.querySelector('#timein');
+  var formResetButton = document.querySelector('.ad-form__reset');
+  var mapFilters = document.querySelector('.map__filters');
 
   var deactivateForm = function () {
     window.formValidation.setAddress(false);
@@ -13,8 +17,6 @@
     map.querySelector('.map__filters').classList.add('map__filters--disabled');
     map.querySelector('.map__filters').reset();
   };
-
-  deactivateForm();
 
   var deactivatePage = function () {
     var mapPins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
@@ -43,10 +45,6 @@
     mapPinMain.addEventListener('keydown', mainPinClichHandler);
   };
 
-  var selectRoom = notice.querySelector('#room_number');
-  var timeIn = notice.querySelector('#timein');
-  var formResetButton = document.querySelector('.ad-form__reset');
-
   var formResetClickHandler = function (evt) {
     var form = notice.querySelector('.ad-form');
     evt.preventDefault();
@@ -58,7 +56,7 @@
 
   var successHandler = function (data) {
     window.pins = data;
-    window.renderPins(window.filter.updatePins(data));
+    window.createPins.renderPins(window.filter.updatePins(data));
   };
 
   var errorHandler = function (errorMessage) {
@@ -72,8 +70,6 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  var mapFilters = document.querySelector('.map__filters');
-
   var mainPinClichHandler = function (evt) {
     if (evt.button === 0 || evt.key === 'Enter') {
       var room = selectRoom.options.selectedIndex;
@@ -83,7 +79,7 @@
       window.formValidation.setStatus(map.querySelectorAll('select'), true);
       map.querySelector('.map__filters').classList.remove('map__filters--disabled');
       notice.querySelector('.ad-form').classList.remove('ad-form--disabled');
-      window.load(successHandler, errorHandler);
+      window.backend.load(successHandler, errorHandler);
       window.formValidation.setAddress(true);
       window.formValidation.checkRooms(selectRoom.options[room].value);
       window.formValidation.checkType();
@@ -92,7 +88,7 @@
       mapPinMain.removeEventListener('keydown', mainPinClichHandler);
 
       formResetButton.addEventListener('click', formResetClickHandler);
-      mapFilters.addEventListener('change', window.filter.mapFiltersHandler);
+      mapFilters.addEventListener('change', window.filter.mapHandler);
     }
   };
 
@@ -100,6 +96,9 @@
 
   mapPinMain.addEventListener('keydown', mainPinClichHandler);
 
-  window.deactivatePage = deactivatePage;
+  deactivateForm();
 
+  window.main = {
+    deactivatePage: deactivatePage
+  };
 })();

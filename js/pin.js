@@ -19,13 +19,13 @@
       if (card) {
         card.remove();
       }
-      window.renderCard(data);
+      window.card.renderCard(data);
 
     });
 
     newPin.addEventListener('keydown', function (evt) {
       if (evt.key === 'Enter') {
-        window.renderCard(data);
+        window.card.renderCard(data);
       }
     });
 
@@ -47,7 +47,9 @@
     });
   };
 
-  window.renderPins = renderPins;
+  window.createPins = {
+    renderPins: renderPins
+  };
 
 })();
 
