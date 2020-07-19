@@ -24,7 +24,7 @@
     });
 
     newPin.addEventListener('keydown', function (evt) {
-      if (evt.key === 'Enter') {
+      if (evt.key === window.util.ENTER) {
         window.card.renderCard(data);
       }
     });

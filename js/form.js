@@ -85,7 +85,7 @@
 
   var successClickHandler = function (evt) {
     evt.preventDefault();
-    if (evt.button === 0 || evt.key === 'Escape') {
+    if (evt.button === 0 || evt.key === window.util.ESCAPE) {
       document.querySelector('.success').remove();
 
       document.removeEventListener('click', successClickHandler);
@@ -95,7 +95,7 @@
 
   var errorClickHandler = function (evt) {
     evt.preventDefault();
-    if (evt.button === 0 || evt.key === 'Escape') {
+    if (evt.button === 0 || evt.key === window.util.ESCAPE) {
       document.querySelector('.error').remove();
 
       document.removeEventListener('click', errorClickHandler);

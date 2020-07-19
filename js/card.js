@@ -87,7 +87,7 @@
   };
 
   var onCardEscPress = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.key === window.util.ESCAPE) {
       evt.preventDefault();
       closeCard();
     }
@@ -121,6 +121,7 @@
   };
 
   window.card = {
-    renderCard: renderCard
+    renderCard: renderCard,
+    closeCard: closeCard
   };
 })();

@@ -13,6 +13,8 @@
     MIN_TOP_COORDS: 130,
     MAX_TOP_COORDS: 630,
     MAX_PINS_COUNT: 5,
+    ESCAPE: 'Escape',
+    ENTER: 'Enter',
     typesName: {
       palace: 'Дворец',
       flat: 'Квартира',

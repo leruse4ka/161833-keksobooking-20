@@ -32,6 +32,7 @@
       feature.checked = false;
     });
     notice.querySelector('.ad-form').classList.add('ad-form--disabled');
+    window.card.closeCard();
 
     mapPins.forEach(function (pin) {
       pin.remove();
@@ -71,7 +72,7 @@
   };
 
   var mainPinClichHandler = function (evt) {
-    if (evt.button === 0 || evt.key === 'Enter') {
+    if (evt.button === 0 || evt.key === window.util.ENTER) {
       var room = selectRoom.options.selectedIndex;
       var time = timeIn.value;
       map.classList.remove('map--faded');
